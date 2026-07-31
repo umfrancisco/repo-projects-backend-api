@@ -20,7 +20,7 @@ type ProjectsResponse struct {
 func GetProjects(ctx context.Context) (*ProjectsResponse, error) {
 	rows, err := DB.Query(ctx, `
 		SELECT name, description, language, link
-		FROM projects
+		FROM projects ORDER BY name ASC
 	`)
 	if err != nil {
 		return nil, err
