@@ -12,20 +12,38 @@ type Project struct {
 	Link        string `json:"link"`
 }
 
-// encore:api public method=GET path=/project
-func GetProject(ctx context.Context) (*Project, error) {
-	row := DB.QueryRow(ctx, `
+type ProjectsResponse struct {
+	Projects []*Project `json:"projects"`
+}
+
+// encore:api public method=GET path=/projects
+func GetProjects(ctx context.Context) (*ProjectsResponse, error) {
+	rows, err := DB.Query(ctx, `
 		SELECT name, description, language, link
 		FROM projects
 	`)
-
-	var p Project
-	err := row.Scan(&p.Name, &p.Description, &p.Language, &p.Link)
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
-	return &p, nil
+	var projects []*Project
+
+	for rows.Next() {
+		var p Project
+		if err := rows.Scan(&p.Name, &p.Description, &p.Language, &p.Link); err != nil {
+			return nil, err
+		}
+		projects = append(projects, &p)
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return &ProjectsResponse{
+		Projects: projects,
+	}, nil
 }
 
 // encore:api public method=POST path=/project
