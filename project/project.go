@@ -27,13 +27,3 @@ func GetProject(ctx context.Context) (*Project, error) {
 
 	return &p, nil
 }
-
-// encore:api public method=POST path=/project
-func CreateProject(ctx context.Context, p *Project) error {
-	_, err := DB.Exec(ctx, `
-		INSERT INTO projects (name, description, language, link)
-		VALUES ($1, $2, $3, $4)
-	`, p.Name, p.Description, p.Language, p.Link)
-
-	return err
-}
