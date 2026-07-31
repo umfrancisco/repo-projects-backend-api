@@ -46,12 +46,12 @@ func GetProjects(ctx context.Context) (*ProjectsResponse, error) {
 	}, nil
 }
 
-// encore:api public method=POST path=/project
-func CreateProject(ctx context.Context, p *Project) error {
-	_, err := DB.Exec(ctx, `
-		INSERT INTO projects (name, description, language, link)
-		VALUES ($1, $2, $3, $4)
-	`, p.Name, p.Description, p.Language, p.Link)
+// // encore:api public method=POST path=/project
+// func CreateProject(ctx context.Context, p *Project) error {
+// 	_, err := DB.Exec(ctx, `
+// 		INSERT INTO projects (name, description, language, link)
+// 		VALUES ($1, $2, $3, $4)
+// 	`, p.Name, p.Description, p.Language, p.Link)
 
-	return err
-}
+// 	return err
+// }
