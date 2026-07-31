@@ -9,7 +9,6 @@ Esta API fornece endpoints para gerenciar projetos, permitindo:
 * Criar projetos
 * Listar projetos armazenados
 * Persistir dados em banco PostgreSQL
-* Inicializar dados automaticamente (seed)
 
 Cada projeto contém:
 
